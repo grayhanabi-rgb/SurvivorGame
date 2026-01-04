@@ -1,32 +1,31 @@
-# res://scripts/bullet.gd
 extends Sprite2D
 
-@export var speed: float = 400.0      # 子弹飞行速度
-@export var damage: float = 25.0      # 子弹伤害值
-@export var lifetime: float = 3.0     # 子弹存在时间（秒）
-
-var direction: Vector2 = Vector2.RIGHT  # 子弹飞行方向
+@export var speed: float = 500.0
+@export var damage: float = 10.0
+var direction: Vector2
 
 func _ready():
-	# 设置子弹朝向
-	rotation = direction.angle()
-	
-	# 自动销毁计时器
-	await get_tree().create_timer(lifetime).timeout
-	queue_free()
+	# 假设方向由发射时传入（例如从玩家脚本）
+	# 如果你使用 look_at 或 rotation 设置方向，请根据实际情况调整
+	pass
 
 func _physics_process(delta):
-	# 子弹移动
-	position += direction * speed * delta
+	if direction:
+		position += direction * speed * delta
+	else:
+		# 如果未设置方向，自动朝上（兼容旧逻辑）
+		position += Vector2(0, -1) * speed * delta
+
+	# 可选：超出屏幕后自动销毁（防止内存泄漏）
+	if not get_viewport_rect().has_point(get_global_mouse_position()):
+		queue_free()
 
 func _on_area_entered(area):
-	print("🔥 强制触发！碰到的对象：", area.name)
-	print("对象类型：", area.get_class())
-	print("是否在 enemy 分组：", area.is_in_group("enemy"))
+	# 获取 Area2D 的父节点（即真正的敌人根节点）
+	var enemy = area.get_parent()
 	
-	# 强制销毁子弹，测试是否真的触发了
-	queue_free()
-
-
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+	# 检查父节点是否存在、属于 "enemy" 分组、且有 take_damage 方法
+	if enemy != null and enemy.is_in_group("enemy"):
+		if enemy.has_method("take_damage"):
+			enemy.take_damage(damage)
+		queue_free()  # 销毁子弹
