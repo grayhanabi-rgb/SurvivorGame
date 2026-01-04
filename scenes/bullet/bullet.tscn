@@ -1,16 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://cekj85srvvhyd"]
 
-[ext_resource type="Texture2D" uid="uid://co2dwiywwdmqm" path="res://resources/weapons/All_Fire_Bullet_Pixel_16x16.png" id="1_83itf"]
 [ext_resource type="Script" uid="uid://byk2udqdf0ybt" path="res://scenes/bullet/bullet.gd" id="2_c6pnf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0vdx3"]
 radius = 5.0
 
-[node name="Sprite2D" type="Sprite2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_7c8un"]
+radius = 5.0
+
+[node name="Bullet" type="Area2D"]
 scale = Vector2(2, 2)
-texture = ExtResource("1_83itf")
-region_enabled = true
-region_rect = Rect2(500, 3, 9, 9)
 script = ExtResource("2_c6pnf")
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -20,5 +19,9 @@ position = Vector2(2.38419e-07, 0)
 shape = SubResource("CircleShape2D_0vdx3")
 one_way_collision_margin = 0.0
 debug_color = Color(0.2408, 0.5504, 0.86, 0.486275)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7c8un")
+debug_color = Color(0.926417, 4.02373e-05, 0.672492, 0.42)
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]

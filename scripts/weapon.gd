@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var bullet_scene: PackedScene  # ← 关键！让编辑器显示该字段
+@export var bullet_scene: PackedScene
 @export var shoot_range: float = 300.0
 @export var fire_rate: float = 0.3
 
@@ -32,6 +32,7 @@ func try_shoot():
 				closest_distance = dist
 				closest_enemy = enemy
 	
+	# ✅ 仅当有敌人时才射击
 	if closest_enemy != null:
 		last_shot_time = current_time
 		
