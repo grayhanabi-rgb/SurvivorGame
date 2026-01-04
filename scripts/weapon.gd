@@ -4,16 +4,15 @@ extends Node2D
 @export var shoot_range: float = 300.0
 @export var fire_rate: float = 0.3
 
-var player: CharacterBody2D
+var player = null
 var last_shot_time: float = 0.0
 
 func _ready():
 	if bullet_scene == null:
-		push_error("Weapon: bullet_scene not assigned!")
-		return
+		push_error("Weapon: 'Bullet Scene' is not assigned in the inspector!")
 
-func set_player(owner: CharacterBody2D):  # 改名为 owner，避免冲突
-	self.player = owner
+func set_player(p):
+	player = p
 
 func try_shoot():
 	if player == null or bullet_scene == null:
@@ -26,20 +25,29 @@ func try_shoot():
 	var closest_enemy = null
 	var closest_distance = shoot_range
 	
+	# 查找最近的敌人
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if enemy is Node2D and enemy.is_inside_tree():
-			var dist = global_position.distance_to(enemy.global_position)
+			var dist = global_position.distance_to(enemy.global_position)  # ✅ 正确声明
 			if dist < closest_distance:
 				closest_distance = dist
 				closest_enemy = enemy
 	
+	# 如果有敌人在射程内，发射子弹
 	if closest_enemy != null:
 		last_shot_time = current_time
 		
 		var bullet = bullet_scene.instantiate()
-		bullet.position = $Muzzle.global_position
 		
+		# 设置发射位置
+		if has_node("Muzzle"):
+			bullet.position = $Muzzle.global_position
+		else:
+			bullet.position = global_position  # 回退方案
+		
+		# 设置方向
 		var direction = (closest_enemy.global_position - bullet.position).normalized()
 		bullet.direction = direction
 		
+		# 添加到根节点，避免被玩家销毁影响
 		get_tree().root.add_child(bullet)
