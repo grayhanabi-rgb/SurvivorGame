@@ -48,6 +48,7 @@ animations = [{
 [node name="Bullet" type="Area2D"]
 scale = Vector2(2, 2)
 script = ExtResource("2_c6pnf")
+speed = null
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -65,6 +66,6 @@ debug_color = Color(0.926417, 4.02373e-05, 0.672492, 0.42)
 scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_4loxr")
 autoplay = "default"
-frame_progress = 0.581068
+frame_progress = 0.312333
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
