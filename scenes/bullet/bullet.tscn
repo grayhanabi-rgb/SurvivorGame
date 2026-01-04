@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cekj85srvvhyd"]
+[gd_scene load_steps=10 format=3 uid="uid://cekj85srvvhyd"]
 
+[ext_resource type="Texture2D" uid="uid://co2dwiywwdmqm" path="res://resources/weapons/All_Fire_Bullet_Pixel_16x16.png" id="1_83itf"]
 [ext_resource type="Script" uid="uid://byk2udqdf0ybt" path="res://scenes/bullet/bullet.gd" id="2_c6pnf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0vdx3"]
@@ -7,6 +8,42 @@ radius = 5.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7c8un"]
 radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83itf"]
+atlas = ExtResource("1_83itf")
+region = Rect2(464, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6pnf"]
+atlas = ExtResource("1_83itf")
+region = Rect2(448, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vdx3"]
+atlas = ExtResource("1_83itf")
+region = Rect2(432, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8g26r"]
+atlas = ExtResource("1_83itf")
+region = Rect2(416, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4loxr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83itf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6pnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0vdx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8g26r")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="Bullet" type="Area2D"]
 scale = Vector2(2, 2)
@@ -23,5 +60,11 @@ debug_color = Color(0.2408, 0.5504, 0.86, 0.486275)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7c8un")
 debug_color = Color(0.926417, 4.02373e-05, 0.672492, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_4loxr")
+autoplay = "default"
+frame_progress = 0.581068
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
