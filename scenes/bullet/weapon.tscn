@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx0caotyopr31"]
+[gd_scene load_steps=3 format=3 uid="uid://dx0caotyopr31"]
 
 [ext_resource type="Script" uid="uid://cfcpfrm06utsf" path="res://scripts/weapon.gd" id="1_lcea1"]
+[ext_resource type="PackedScene" uid="uid://cekj85srvvhyd" path="res://scenes/bullet/bullet.tscn" id="2_sfqy6"]
 
 [node name="Weapon" type="Node2D"]
+script = ExtResource("1_lcea1")
+bullet_scene = ExtResource("2_sfqy6")
 
 [node name="Muzzle" type="Marker2D" parent="."]
 position = Vector2(0, -20)
-script = ExtResource("1_lcea1")

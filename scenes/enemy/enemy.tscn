@@ -26,5 +26,4 @@ color = Color(1, 0, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Area2D"]
 position = Vector2(16, 16)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_a3pup")
